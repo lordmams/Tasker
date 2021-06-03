@@ -40,12 +40,12 @@ class Task
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=tags::class, inversedBy="tasks")
+     * @ORM\ManyToMany(targetEntity=Tags::class, inversedBy="tasks")
      */
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity=user::class, inversedBy="tasks")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks")
      */
     private $users;
 
@@ -114,14 +114,14 @@ class Task
     }
 
     /**
-     * @return Collection|tags[]
+     * @return Collection|Tags[]
      */
     public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    public function addTag(tags $tag): self
+    public function addTag(Tags $tag): self
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
@@ -130,7 +130,7 @@ class Task
         return $this;
     }
 
-    public function removeTag(tags $tag): self
+    public function removeTag(Tags $tag): self
     {
         $this->tags->removeElement($tag);
 
@@ -138,14 +138,14 @@ class Task
     }
 
     /**
-     * @return Collection|user[]
+     * @return Collection|User[]
      */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
-    public function addUser(user $user): self
+    public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
@@ -154,7 +154,7 @@ class Task
         return $this;
     }
 
-    public function removeUser(user $user): self
+    public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
 

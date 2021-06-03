@@ -6,11 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -48,11 +50,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $is_active;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
@@ -66,6 +63,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="users")
      */
     private $tasks;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $apiToken;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_verified;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isValid;
 
     public function __construct()
     {
@@ -255,6 +268,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->tasks->removeElement($task)) {
             $task->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->is_verified = $isVerified;
+
+        return $this;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(?string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function getIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(bool $isValid): self
+    {
+        $this->isValid = $isValid;
 
         return $this;
     }

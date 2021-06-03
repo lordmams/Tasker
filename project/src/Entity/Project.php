@@ -35,7 +35,7 @@ class Project
     private $chats;
 
     /**
-     * @ORM\OneToMany(targetEntity=task::class, mappedBy="project")
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="project")
      */
     private $task;
 
@@ -105,14 +105,14 @@ class Project
     }
 
     /**
-     * @return Collection|task[]
+     * @return Collection|Task[]
      */
     public function getTask(): Collection
     {
         return $this->task;
     }
 
-    public function addTask(task $task): self
+    public function addTask(Task $task): self
     {
         if (!$this->task->contains($task)) {
             $this->task[] = $task;
@@ -122,7 +122,7 @@ class Project
         return $this;
     }
 
-    public function removeTask(task $task): self
+    public function removeTask(Task $task): self
     {
         if ($this->task->removeElement($task)) {
             // set the owning side to null (unless already changed)

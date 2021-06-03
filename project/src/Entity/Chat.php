@@ -28,7 +28,7 @@ class Chat
     private $posted_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=project::class, inversedBy="chats")
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="chats")
      * @ORM\JoinColumn(nullable=false)
      */
     private $project;
@@ -67,12 +67,12 @@ class Chat
         return $this;
     }
 
-    public function getProject(): ?project
+    public function getProject(): ?Project
     {
         return $this->project;
     }
 
-    public function setProject(?project $project): self
+    public function setProject(?Project $project): self
     {
         $this->project = $project;
 
