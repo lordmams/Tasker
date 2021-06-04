@@ -8,9 +8,10 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
 import bsCustomFileInput from 'bs-custom-file-input';
-
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 // start the Stimulus application
-import './bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 bsCustomFileInput.init();

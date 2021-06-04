@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  
+{% endblock %}
+
+{% block body %}
+      <div class="row">
+                       
+                         <div class=" ">
+                            
+                            <h1 class="font-weight-light align-middle">
+                                Project {{ name }}
+                             </h1>
+                            <div class="col-8">
+                                {% if isCreator %}
+                                   <a href="{{ path('user_edit_profile') }}"
+                                     class="btn btn-lg  font-weight-light">
+                                     Edit Project
+                                  </a>
+                                   <a href="{{ path('task_add', { slug: slug }) }}"
+                                     class="btn btn-lg  font-weight-light">
+                                     Ajouter une tache
+                                  </a>
+                                  <form method="post" action="{{ path('project_add') }}">
+                                        <input type="text" 
+                                            value="" 
+                                            name="name">
+                                    <button class="btn btn-lg btn-primary" type="submit">
+                                        Ajouter un membre 
+                                    </button>
+                                  </form>
+
+                                    
+                               
+                            
+                                {% endif %}
+                           
+                            
+                            </div>
+
+                          {% for task in tasks %}
+                            <div class="row">
+                               
+            
+                                <div class="container-fluid">
+                                    <div class="card border shadow lift">
+                                        <div class="card-body">
+                                            <div class="card-title">
+                                                <h4 class="font-weight-light">
+                                                    {{ task.title }}
+                                                </h4>
+                                            </div>
+                                            crée le {{ task.createdAt|date('Y-m-d') }}
+                                            <p>{{ task.description }}</p>
+                                            {% if task.status == 0 %}
+                                                <span class="badge badge-secondary">A faire</span>
+                                            {% endif  %}
+                                            {% if task.status == 1 %}
+                                                <span class="badge badge-success">Fini</span>
+                                            {% endif  %}
+                                            {% if task.status == 2 %}
+                                                <span class="badge badge-warning">En cours</span>
+                                            {% endif  %}
+                                        </div>
+                                    </div>
+                                </div>
+                      
+            
+                            </div>
+                    {% endfor %}
+
+                        </div>
+                        
+                    </div>  
+{% endblock %}

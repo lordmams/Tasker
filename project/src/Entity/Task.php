@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Task
 {
+
+    public const STATUS_TODO = 0;
+    public const STATUS_ONGOING = 1;
+    public const STATUS_DONE = 2;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -58,6 +63,8 @@ class Task
     {
         $this->tags = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->created_at = new \DateTime();
+        $this->status = 0;
     }
 
     public function getId(): ?int

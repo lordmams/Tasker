@@ -80,10 +80,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isValid;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="users")
+     */
+    private $userProject;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="user")
+     */
+    private $projectAdministrator;
+
     public function __construct()
     {
         $this->chats = new ArrayCollection();
         $this->tasks = new ArrayCollection();
+        $this->userProject = new ArrayCollection();
+        $this->projectAdministrator = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,6 +321,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsValid(bool $isValid): self
     {
         $this->isValid = $isValid;
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getUserProject(): Collection
+    {
+        return $this->userProject;
+    }
+
+    public function addUserProject(Project $userProject): self
+    {
+        if (!$this->userProject->contains($userProject)) {
+            $this->userProject[] = $userProject;
+        }
+
+        return $this;
+    }
+
+    public function removeUserProject(Project $userProject): self
+    {
+        $this->userProject->removeElement($userProject);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjectAdministrator(): Collection
+    {
+        return $this->projectAdministrator;
+    }
+
+    public function addProjectAdministrator(Project $projectAdministrator): self
+    {
+        if (!$this->projectAdministrator->contains($projectAdministrator)) {
+            $this->projectAdministrator[] = $projectAdministrator;
+            $projectAdministrator->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectAdministrator(Project $projectAdministrator): self
+    {
+        if ($this->projectAdministrator->removeElement($projectAdministrator)) {
+            // set the owning side to null (unless already changed)
+            if ($projectAdministrator->getUser() === $this) {
+                $projectAdministrator->setUser(null);
+            }
+        }
 
         return $this;
     }
